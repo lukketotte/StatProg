@@ -1,0 +1,11 @@
+Package: StatProg
+Type: Package
+Title: Package for the course Statistical Programming with R (Uppsala University)
+Version: 0.1.0
+Author: Sebastian Ankargren, Yukai Yang
+Maintainer: Sebastian Ankargren <sebastian.ankargren@statistics.uu.se>
+Description: This package contains data for lectures and labs. 
+License: CC0
+Encoding: UTF-8
+LazyData: true
+Depends:  R (>= 2.10)
