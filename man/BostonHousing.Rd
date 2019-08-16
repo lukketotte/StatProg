@@ -24,14 +24,14 @@ Housing data for 506 census tracts of Boston from the 1970 census
     \item{\code{ptratio}}{pupil-teacher ratio by town}
     \item{\code{b}}{1000(Bk - 0.63)^2 where Bk is the proportion of blacks by town}
     \item{\code{lstat}}{\% lower status of the population}
-    \item{\code{medv}}{Median value of owner-occupied homes in $1000’s}
+    \item{\code{medv}}{Median value of owner-occupied homes in $1000's}
   }
 }
 \source{
 https://archive.ics.uci.edu/ml/machine-learning-databases/housing/
 }
 \references{
-Harrison, D. and Rubinfeld, D.L. ‘Hedonic prices and the demand for clean air’, J. Environ. Economics & Management, vol.5, 81-102, 1978
+Harrison, D. and Rubinfeld, D.L. 'Hedonic prices and the demand for clean air', J. Environ. Economics & Management, vol.5, 81-102, 1978
 }
 \examples{
 data(BostonHousing)
