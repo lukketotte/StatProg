@@ -2,7 +2,7 @@
 \alias{BostonHousing}
 \docType{data}
 \title{
-%%   ~~ data name/kind ... ~~
+Boston housing data
 }
 \description{
 Housing data for 506 census tracts of Boston from the 1970 census
