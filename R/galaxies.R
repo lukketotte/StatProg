@@ -2,8 +2,7 @@
 #'
 #' A numeric vector of velocities in km/sec of 81 galaxies divided by 1000 from 6
 #' well-separated conic sections of an unfilled survey of the
-#' Corona Borealis region. Multimodality in such surveys is evidence
-#' for voids and superclusters in the far universe.
+#' Corona Borealis region.
 #'
 #'@docType data
 #'
