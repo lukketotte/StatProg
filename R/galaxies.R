@@ -1,6 +1,6 @@
 #' Velocities for 81 Galaxies
 #'
-#' A numeric vector of transformed velocities in km/sec of 81 galaxies from 6
+#' A numeric vector of transformed velocities in km/sec divided by 1000 of 82 galaxies from 6
 #' well-separated conic sections of an unfilled survey of the
 #' Corona Borealis region.
 #'
