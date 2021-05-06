@@ -1,2 +1,2 @@
 # StatProg
-Statistical programming course, UU 
+Statistical programming course, UU.
