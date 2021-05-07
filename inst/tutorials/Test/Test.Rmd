@@ -1,75 +1,186 @@
 ---
-title: "Tutorial"
+title: "Block 1"
 output: learnr::tutorial
 runtime: shiny_prerendered
+description: "Lecture 1"
 ---
 
 ```{r setup, include=FALSE}
 library(learnr)
+gradethis::gradethis_setup()
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
 
-## Topic 1
+## Lecture 1
 
-### Exercise 
 
-*Here's a simple exercise with an empty code chunk provided for entering the answer.*
+### Set 1
+<ol>
+<li> Create a vector `c("Hello", 12)`. What is the type of this vector? Why?
+```{r vectype, exercise=TRUE}
 
-Write the R code required to add two plus two:
-
-```{r two-plus-two, exercise=TRUE}
 
 ```
 
-### Exercise with Code
+```{r vectype-solution}
+# R automatically converts to the lowest common type
+x = c("Hello", 12)
+typeof(x)
+```
+</li>
+<li>
+Use `length()` or `dim()` to determine the size of `vec1`, `list1` and `mat1` (these are available in the code box). Do you see when to use which? 
+```{r typesCheck-setup}
+vec1 = rep(1:3, times = 4)
+mat1 = matrix(vec1, nrow = 4, ncol = 3)
+x = c(1, 10, 8)
+list1 = list(vec1, x)
+```
 
-*Here's an exercise with some prepopulated code as well as `exercise.lines = 5` to provide a bit more initial room to work.*
+```{r typesCheck, exercise=TRUE}
 
-Now write a function that adds any two numbers and then call it:
+```
 
-```{r add-function, exercise=TRUE, exercise.lines = 5}
-add <- function() {
-  
+```{r qTypes, echo = FALSE}
+question("What does dim(vec1) return?",
+         answer("[1] 3 3", message = "A vector does not have two dimensions"),
+         answer("NULL", correct = TRUE),
+         answer("[1] 3 1", message = "This would not be to strange, but keep in mind this is not techniqually a column vector in the linear algebra sense"),
+         random_answer_order = TRUE)
+```
+
+
+`df1 = data.frame(name = c("A", "B"), size = c(1, 1.1))`
+
+
+```{r qTypes2, echo = FALSE}
+question("Consider the snippet above. What does dim(df1) return?",
+         answer("[1] 2 2", message = "Remember that data frames are lists!"),
+         answer("NULL", correct = TRUE),
+         random_answer_order = TRUE)
+```
+
+</li>
+</ol>
+
+### Set 2
+<ol>
+<li> Create two vectors `a` and `b`of equal length using some arbitrary numbers.
+</li>
+<li> `cbind` (column bind) `a` and `b` and store in an object called `ab`
+</li>
+<li> check the class of `ab`
+</li>
+<li>
+Extract the first column of `ab` and check its class.
+</li>
+```{r ab, exercise=TRUE}
+## 1
+
+## 2
+
+## 3
+
+## 4
+```
+```{r ab-hint-1}
+### 3
+class(...) 
+```
+```{r ab-hint-2}
+### 4
+mat[rows, cols] # do you remember how you could choose all indecies in one dimension?
+```
+</ol>
+
+### Set 3
+<ol>
+<li> Calculate the unbiased sample standard deviation of `x`: $\sqrt{\frac{1}{n-1}\sum_{i=1}^n (x_i - \bar{x})^2}$
+```{r sd, exercise=TRUE}
+x = c(1.2, 3.2, 1.1, -2.1, 10.1, 10023.123)
+```
+```{r sd-hint-1}
+x-mean(x) # the minus will be done elementwise
+```
+```{r sd-hint-2}
+x^2 # the square will also be done element wise
+```
+```{r sd-hint-3}
+(x-mean(x))^2 # this gives you the vector you need
+```
+```{r sd-check}
+grade_result(
+  pass_if(~identical(.result, sqrt(sum((x-mean(x))^2)/(length(x)-1))))
+)
+
+```
+</li>
+<li>
+Compare your result with the built-in `sd()`
+```{r sd-1, exercise=TRUE}
+x = c(1.2, 3.2, 1.1, -2.1, 10.1, 10023.123)
+```
+</li>
+</ol>
+
+### Extra problems
+<ol>
+<li>
+```{r q1, echo = FALSE}
+question("What is the result of `c(TRUE, FALSE) && TRUE`?",
+         answer("FALSE", message = "We are not comparing the objects"),
+         answer("TRUE", correct = TRUE),
+         answer("TRUE FALSE", message = "Recall that the double logical symbols only evaluates as many terms as necessary"),
+         random_answer_order = TRUE)
+```
+</li>
+<li>
+Calculate the t-test of $H_0:\mu = 0$ vs. $H_1:\mu \neq 0$ for `x`, defined as $t = \frac{\bar{x}}{\hat{\sigma}_{\bar{x}}}$ where $\hat{\sigma}_{\bar{x}}$ is the standard deviation of $\bar{x}$
+````{r q2, exercise = TRUE}
+set.seed(123)
+x = rnorm(100, 0.5)
+```
+<div id="q2-hint">
+**Hint:** Recall that $\hat{\sigma}_{\bar{x}} = \frac{\sigma_x}{\sqrt{n}}$
+</div>
+
+```{r q2-check}
+grade_result(
+  pass_if(~identical(.result, sqrt(100) * mean(x) / sd(x)))
+)
+
+```
+</li>
+</ol>
+
+## Lecture 2
+
+### Set 1
+<ol>
+<li>
+Write an `if` statement that prints the sentence "It is true" if `x` is equal to $3$ and "It is false" otherwise. Set `x` to $3$ and see that it works. Change `x` to 4 and see that you get the second statement.
+```{r if1, exercise = TRUE}
+x = 3
+```
+```{r if1-hint-1}
+if(...) {
+  # true
+} else {
+  # fase
+}
+```
+```{r if1-hint-2}
+if(x==3) {
+  print(...)
+} else {
+  print(...)
 }
 ```
 
-## Topic 2
-
-### Exercise with Hint
-
-*Here's an exercise where the chunk is pre-evaulated via the `exercise.eval` option (so the user can see the default output we'd like them to customize). We also add a "hint" to the correct solution via the chunk immediate below labeled `print-limit-hint`.*
-
-Modify the following code to limit the number of rows printed to 5:
-
-```{r print-limit, exercise=TRUE, exercise.eval=TRUE}
-mtcars
+```{r if2, exercise = TRUE}
+x = 4
 ```
-
-```{r print-limit-hint}
-head(mtcars)
-```
-
-### Quiz
-
-*You can include any number of single or multiple choice questions as a quiz. Use the `question` function to define a question and the `quiz` function for grouping multiple questions together.*
-
-Some questions to verify that you understand the purposes of various base and recommended R packages:
-
-```{r quiz}
-quiz(
-  question("Which package contains functions for installing other R packages?",
-    answer("base"),
-    answer("tools"),
-    answer("utils", correct = TRUE),
-    answer("codetools")
-  ),
-  question("Which of the R packages listed below are used to create plots?",
-    answer("lattice", correct = TRUE),
-    answer("tools"),
-    answer("stats"),
-    answer("grid", correct = TRUE)
-  )
-)
-```
+</li>
+</ol>
 
