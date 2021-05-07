@@ -149,7 +149,6 @@ x = rnorm(100, 0.5)
 grade_result(
   pass_if(~identical(.result, sqrt(100) * mean(x) / sd(x)))
 )
-
 ```
 </li>
 </ol>
@@ -180,6 +179,102 @@ if(x==3) {
 
 ```{r if2, exercise = TRUE}
 x = 4
+```
+</li>
+<li>
+Try now to combine a conditional statement with subsetting. Let `x` contain 20 random numbers from the standard normal distribution. Check whether it has nay negative numbers, and if so extract these.
+```{r neg, exercise = TRUE }
+x = rnorm(20)
+```
+<div id="neg-hint">
+**Hint:** Create a boolean vector (recall that `<, >` are vectorized) and use that to subset
+</div>
+```{r neg-check}
+grade_result(
+  pass_if(~identical(.result, x[x<0]))
+)
+```
+</li>
+<li>
+Adjust the above code so that if there are any negative numbers you multiply these by $-1$ and overwrite. The end result should be the vector of absolute values $|x|$.
+```{r neg2, exercise = TRUE }
+x = rnorm(20)
+```
+```{r neg2-hint-1}
+x[...] = -x[...]
+```
+```{r neg2-check}
+grade_result(
+  pass_if(~identical(.result, abs(x)))
+)
+```
+</li>
+</ol>
+
+### Set 2
+<ol>
+<li>
+Write a `for` loop that prints the values $1,4,9,16$.
+```{r for1, exercise = TRUE }
+
+```
+```{r for1-hint-1, eval=FALSE}
+for(...){
+  print(...)
+}
+```
+```{r for1-hint-2}
+# What is the square root of the values to print?
+```
+<li>
+Go back to the sum of `x` example and generate the vector of values to iterate over automatically based on the size of `x`. Next, change the size of `x` and without changing anything in the loop make sure that it still works.
+```{r for2, exercise = TRUE }
+x = rnorm(1000)
+sumx = 0
+# your code
+
+# finish by calling the sum term
+sumx
+```
+```{r for2-hint-1, eval=FALSE}
+1:length(x)
+```
+```{r for2-hint-2, eval=FALSE}
+for(i in 1:length(x)){
+  # add to sum term
+}
+
+# or
+
+for(a in x){
+  # add a to sum term
+}
+```
+
+```{r for2-check}
+grade_result(
+  pass_if(~identical(round(.result, 3), round(sum(x), 3)))
+)
+```
+
+
+
+</li>
+```{r for3, exercise = TRUE }
+x = rnorm(10)
+sumx = 0
+
+# your code
+
+# finish by calling the sum term
+sumx
+```
+```{r for3-check}
+grade_result(
+  pass_if(~identical(round(.result, 3), round(sum(x), 3)))
+)
+```
+
 ```
 </li>
 </ol>
