@@ -7,7 +7,6 @@ description: "Lecture 1"
 
 ```{r setup, include=FALSE}
 library(learnr)
-gradethis::gradethis_setup()
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
@@ -92,6 +91,14 @@ class(...)
 ### 4
 mat[rows, cols] # do you remember how you could choose all indecies in one dimension?
 ```
+```{r ab-solution}
+# for example
+a = c(1,2,3)
+b = 4:6
+ab = cbind(a,b)
+class(ab)
+class(ab[:,1])
+```
 </ol>
 
 ### Set 3
@@ -109,12 +116,10 @@ x^2 # the square will also be done element wise
 ```{r sd-hint-3}
 (x-mean(x))^2 # this gives you the vector you need
 ```
-```{r sd-check}
-grade_result(
-  pass_if(~identical(.result, sqrt(sum((x-mean(x))^2)/(length(x)-1))))
-)
-
+```{r sd-solution}
+sum((x-mean(x))^2) / (length(x) - 1)
 ```
+
 </li>
 <li>
 Compare your result with the built-in `sd()`
@@ -137,19 +142,14 @@ question("What is the result of `c(TRUE, FALSE) && TRUE`?",
 </li>
 <li>
 Calculate the t-test of $H_0:\mu = 0$ vs. $H_1:\mu \neq 0$ for `x`, defined as $t = \frac{\bar{x}}{\hat{\sigma}_{\bar{x}}}$ where $\hat{\sigma}_{\bar{x}}$ is the standard deviation of $\bar{x}$
-````{r q2, exercise = TRUE}
+```{r q2, exercise = TRUE}
 set.seed(123)
 x = rnorm(100, 0.5)
 ```
-<div id="q2-hint">
-**Hint:** Recall that $\hat{\sigma}_{\bar{x}} = \frac{\sigma_x}{\sqrt{n}}$
-</div>
-
-```{r q2-check}
-grade_result(
-  pass_if(~identical(.result, sqrt(100) * mean(x) / sd(x)))
-)
+```{r q2-solution}
+sqrt(n) * mean(x) / sd(x)
 ```
+
 </li>
 </ol>
 
@@ -176,6 +176,13 @@ if(x==3) {
   print(...)
 }
 ```
+```{r if1-solution}
+if(x==3) {
+  print("It is true")
+} else {
+  print("It is false")
+}
+```
 
 ```{r if2, exercise = TRUE}
 x = 4
@@ -186,14 +193,24 @@ Try now to combine a conditional statement with subsetting. Let `x` contain 20 r
 ```{r neg, exercise = TRUE }
 x = rnorm(20)
 ```
-<div id="neg-hint">
-**Hint:** Create a boolean vector (recall that `<, >` are vectorized) and use that to subset
-</div>
-```{r neg-check}
-grade_result(
-  pass_if(~identical(.result, x[x<0]))
-)
+```{r neg-hint-1}
+ # Create a boolean vector (recall that `<, >` are vectorized) and use that to subset
 ```
+```{r neg-solution}
+# Either 
+x[x<0]
+# ...or
+if(any(x<0)){
+  x[x<0]
+}
+```
+
+```{r negQ, echo = FALSE}
+question("Check the solutions in the above question (final hint). Is there any difference between the two solutions?",
+         answer("yes", correct = TRUE),
+         answer("no", message = "Does the if code actually return anything if all values are positive?"))
+```
+
 </li>
 <li>
 Adjust the above code so that if there are any negative numbers you multiply these by $-1$ and overwrite. The end result should be the vector of absolute values $|x|$.
@@ -203,11 +220,16 @@ x = rnorm(20)
 ```{r neg2-hint-1}
 x[...] = -x[...]
 ```
-```{r neg2-check}
-grade_result(
-  pass_if(~identical(.result, abs(x)))
-)
+```{r neg2-solution}
+# As before, either
+x[x<0] = -x[x<0]
+# ..or
+if(any(x < 0)){
+  x[x<0] = -x[x<0]
+}
 ```
+
+
 </li>
 </ol>
 
@@ -226,19 +248,30 @@ for(...){
 ```{r for1-hint-2}
 # What is the square root of the values to print?
 ```
+```{r for1-solution}
+# Neat solution
+for(i in 1:4){
+  print(i^2)
+}
+# this works, but is not as nice!
+x = c(1,4,9,16)
+for(i in 1:length(x)){
+  print(x[i])
+}
+```
+</li>
 <li>
 Go back to the sum of `x` example and generate the vector of values to iterate over automatically based on the size of `x`. Next, change the size of `x` and without changing anything in the loop make sure that it still works.
 ```{r for2, exercise = TRUE }
 x = rnorm(1000)
 sumx = 0
-# your code
 
-# finish by calling the sum term
-sumx
 ```
+
 ```{r for2-hint-1, eval=FALSE}
 1:length(x)
 ```
+
 ```{r for2-hint-2, eval=FALSE}
 for(i in 1:length(x)){
   # add to sum term
@@ -250,32 +283,212 @@ for(a in x){
   # add a to sum term
 }
 ```
-
-```{r for2-check}
-grade_result(
-  pass_if(~identical(round(.result, 3), round(sum(x), 3)))
-)
+```{r for2-solution}
+x = rnorm(1000)
+sumx = 0
+for(i in 1:length(x)){
+  sumx = sumx + x[i]
+}
 ```
 
-
-
-</li>
 ```{r for3, exercise = TRUE }
 x = rnorm(10)
 sumx = 0
 
-# your code
-
-# finish by calling the sum term
-sumx
-```
-```{r for3-check}
-grade_result(
-  pass_if(~identical(round(.result, 3), round(sum(x), 3)))
-)
 ```
 
+```{r forQ, echo = FALSE}
+x = "ab"
+question("Check the solutions in the above question (final hint). Is there any difference between the two solutions?",
+         answer("yes", correct = TRUE),
+         answer("no", message = "Does the if code actually return anything if all values are positive?"))
+```
+</li>
+</ol>
+### Set 3
+<p>
+For this set, the second problem is possibly the hardest you have worked with in programming yet! This difficulty is only due to lack of experience so make sure to think about your solution before you start writing it up. See the pattern and try to imagine the for loop in your head.
+</p>
+
+<ol>
+<li>
+Consider the $AR(1)$ process:
+$$
+y_t = \phi y_{t-1} + \epsilon_t,
+$$
+where $\phi = 0.5$, $\epsilon_t \sim N(0,1)$ and $y_1 = 0$. Generate $y_2, \ldots, y_{100}$
+```{r ar1, exercise = TRUE }
+y = numeric(100)
+
+```
+
+```{r ar1-hint-1, eval=FALSE}
+for(t in ?:100){
+  # your code to generate the y as outlined in the model
+}
+```
+```{r ar1-hint-2, eval=FALSE}
+for(t in 2:100){
+  y[t] = ...
+}
+```
+```{r ar1-solution, eval=FALSE}
+for(t in 2:100){
+  y[t] = 0.5 * y[t - 1] + rnorm(1)
+}
+```
+</li>
+<li>
+Now consider the $MA(1)$ process:
+$$
+y_t = \epsilon_t + \theta \epsilon_{t-1},
+$$
+where $\theta = 0.5$ and $\epsilon_t \sim N(0,1)$. The full model in matrix notation is
+$$
+\begin{pmatrix}
+y_2 \\ y_3 \\ y_4 \\ y_5
+\end{pmatrix} = 
+\begin{pmatrix}
+\theta & 1 & 0 & 0 & 0 \\
+0 & \theta & 1 & 0 & 0 \\
+0 & 0 & \theta & 1 & 0 \\
+0 & 0 & 0 & \theta & 1
+\end{pmatrix}
+\begin{pmatrix}
+\epsilon_1 \\ \epsilon_2 \\ \epsilon_3 \\ \epsilon_4 \\ \epsilon_5
+\end{pmatrix}.
+$$
+Create this matrix using a double loop, and then generate $y_2, \ldots, y_5$ by matrix multiplication.
+```{r ma1, exercise = TRUE }
+A = matrix(0, 4, 5)
+
+```
+
+```{r ma1-hint-1, eval=FALSE}
+for(i in 1:4){
+  # try to imagine how the inner loop behaves based on the pattern of the model matrix!
+  for(j in ...){
+    # your code
+  }
+}
+```
+
+```{r ma1-hint-2, eval=FALSE}
+for(i in 1:4){
+  # the pattern can be based on the diagonal! But here you want to take one more step along the row
+  for(j in i:(i+1)){
+    # Now you need to figure out how to seperate diagonal from off diagonal
+  }
+}
+```
+
+```{r ma1-hint-3, eval=FALSE}
+for(i in 1:4){
+  for(j in i:(i+1)){
+    if(i == j){
+      ...
+    } else {
+      ...
+    }
+  }
+}
+```
+
+```{r ma1-solution, eval=FALSE}
+for(i in 1:4){
+  for(j in i:(i+1)){
+    if(i == j){
+      A[i,j] = 0.5
+    } else {
+      A[i, j] = 1
+    }
+  }
+}
+y = A %*% rnorm(5)
 ```
 </li>
 </ol>
 
+### Set 4, functions
+<ol>
+<li>
+Create a matrix `xx` with $1000$ rows and $2$ columns. You can use `rnorm()` to fill it with numbers. What happens if you use the variance function on `xx`?
+```{r fun1, exercise = TRUE }
+variance <- function(x, unbiased = TRUE) {
+  n <- length(x) # Number of observations
+  if (unbiased) {
+    res <- sum((x - mean(x))^2)/(n - 1) # Sample variance (unbiased)
+  } else {
+    res <- sum((x - mean(x))^2)/n # Sample variance (ML)
+  }
+  return(res)
+}
+```
+```{r fun1-solution}
+xx = matrix(rnorm(2000), nrow = 1000)
+variance(xx)
+```
+</li>
+<li>
+Try to think of what the input `x` must be like for this function to work properly. Can you add an input check (useing `if` and `stop`) so that the function only computes the variance if the input is of the right form?
+```{r fun2, exercise = TRUE }
+variance <- function(x, unbiased = TRUE) {
+  n <- length(x) # Number of observations
+  if (unbiased) {
+    res <- sum((x - mean(x))^2)/(n - 1) # Sample variance (unbiased)
+  } else {
+    res <- sum((x - mean(x))^2)/n # Sample variance (ML)
+  }
+  return(res)
+}
+```
+```{r fun2-hint-1, eval = FALSE}
+variance <- function(x, unbiased = TRUE) {
+  if(...){
+    n <- length(x) # Number of observations
+    if (unbiased) {
+      res <- sum((x - mean(x))^2)/(n - 1) # Sample variance (unbiased)
+    } else {
+      res <- sum((x - mean(x))^2)/n # Sample variance (ML)
+    }
+    return(res)
+  } else {
+    stop(...)
+  }
+}
+```
+```{r fun2-hint-2, eval = FALSE}
+variance <- function(x, unbiased = TRUE) {
+  if(is.vector(x) && ...){
+    n <- length(x) # Number of observations
+    if (unbiased) {
+      res <- sum((x - mean(x))^2)/(n - 1) # Sample variance (unbiased)
+    } else {
+      res <- sum((x - mean(x))^2)/n # Sample variance (ML)
+    }
+    return(res)
+  } else {
+    stop(...)
+  }
+}
+```
+```{r fun2-solution}
+variance <- function(x, unbiased = TRUE) {
+  if(is.vector(x) && is.numeric(x)){
+    n <- length(x) # Number of observations
+    if (unbiased) {
+      res <- sum((x - mean(x))^2)/(n - 1) # Sample variance (unbiased)
+    } else {
+      res <- sum((x - mean(x))^2)/n # Sample variance (ML)
+    }
+    return(res)
+  } else {
+    stop("x is not numeric and/or a vector.")
+  }
+}
+
+xx = matrix(rnorm(2000), nrow = 1000)
+variance(xx)
+```
+</li>
+</ol>
