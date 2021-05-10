@@ -10,6 +10,10 @@ library(learnr)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
+## Introduction
+This document contains the exercises in the lectures of the first block, i.e. lectures 1 to 3. Most of the exercises has both multiple hints and a solution, in this case the final hint is the solution. 
+
+You as a student are more than welcome to contribute to these exercise documents if you have ideas about nice exercises and would like to try out working with Github! You can find the repository [here](https://github.com/lukketotte/StatProg)
 
 ## Lecture 1
 
