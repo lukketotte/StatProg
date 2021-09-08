@@ -22,6 +22,6 @@
 data(movies)
 }
 \description{
-This dataset is a subset of what is available in \code{\link[ggplot2movies]{movies}}.
+This dataset is a subset of what is available in \href{https://cran.r-project.org/web/packages/ggplot2movies/index.html}{ggplot2movies}.
 }
 
